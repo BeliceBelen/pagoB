@@ -306,10 +306,10 @@ class DetallePagoView(View):
     def post(self,request):
         jd=json.loads(request.body)
         #print(jd)
-        #crear una nueva ciudad
-        DetallePago.objects.create(pag_id=jd['pag_id'],inscripcion_id=jd['inscripcion_id'],
-        montoDetalle=jd['montoDetalle'],fechaDetalle=jd['montoDetalle'],
-        descripcion=jd['descripcion'])
+        #crear una nuevo
+        DetallePago.objects.create(pago_id=jd['pago_id'],inscripcion_id=jd['inscripcion_id'],
+        montoDetalle=jd['montoDetalle'],fechaDetalle=jd['fechaDetalle'],
+        descripcion=jd['descripcion'],deuda=jd['deuda'])
         datos={'message':"registrado con éxito"}
         return JsonResponse(datos)
 
@@ -320,11 +320,12 @@ class DetallePagoView(View):
 
         if len(detalles) > 0:
             detalle=DetallePago.objects.get(id=id)
-            detalle.pag_id=jd['pag_id']
+            detalle.pago_id=jd['pago_id']
             detalle.inscripcion_id=jd['inscripcion_id']
             detalle.montoDetalle=jd['montoDetalle']
             detalle.fechaDetalle=jd['fechaDetalle']
             detalle.descripcion=jd['descripcion']
+            detalle.deuda=jd['deuda']
             detalle.save()
             datos = {'message':"exitos"}
             print(datos)
